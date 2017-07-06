@@ -2,7 +2,7 @@
 
 A sample hello world application using the LÖVE(love2d) framework utilizing the Lua language
 
-##To run program
+## To run program
 
 * Install love2d by visiting https://love2d.org/
 
