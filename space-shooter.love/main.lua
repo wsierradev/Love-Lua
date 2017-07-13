@@ -9,12 +9,15 @@ function checkCollisions(enemies, bullets)
     for _, b in pairs(bullets) do
       if b.y <= e.y + e.height and b.x > e.x and b.x < e.x + e.width then
         table.remove(enemies, i)
+        table.remove(bullets, 1)
       end
     end
   end
 end
 
 function love.load()
+  background_image = love.graphics.newImage('background.png')
+
   player = {}
   player.image = love.graphics.newImage('player.png')
   player.fire_sound = love.audio.newSource('shoot.wav')
@@ -91,6 +94,10 @@ function love.update(dt)
 end
 
 function love.draw()
+  love.graphics.setColor(255,255,255)
+  local sx = love.graphics.getWidth() / background_image:getWidth()
+  local sy = love.graphics.getHeight() / background_image:getHeight()
+  love.graphics.draw(background_image, 0, 0, 0, sx, sy) -- x: 0, y: 0, rot: 0, scale x and scale y
   --player
   love.graphics.setColor(255,255,255)
   love.graphics.draw(player.image, player.x, player.y, 0, 1)
