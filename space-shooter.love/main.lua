@@ -1,5 +1,4 @@
 love.graphics.setDefaultFilter('nearest', 'nearest')
-
 enemy = {}
 enemies_controller = {}
 enemies_controller.enemies = {}
@@ -9,13 +8,15 @@ enemies_controller.image = love.graphics.newImage('enemy.png')
 function love.load()
   player = {}
   player.image = love.graphics.newImage('player.png')
+  player.fire_sound = love.audio.newSource('shoot.wav')
   player.x = 0
   player.y = 560
   player.bullets = {}
   player.cooldown = 10
   player.fire = function()
+    love.audio.play(player.fire_sound)
     if player.cooldown <= 0 then
-      player.cooldown = 10
+      player.cooldown = 20
       bullet = {}
       bullet.x = player.x + 10
       bullet.y = player.y
@@ -23,7 +24,9 @@ function love.load()
     end
   end
     enemies_controller:spawnEnemy(0, 0)
-    enemies_controller:spawnEnemy(100, 0)
+    enemies_controller:spawnEnemy(65, 0)
+    enemies_controller:spawnEnemy(130, 0)
+    enemies_controller:spawnEnemy(195, 0)
 end
 
 function enemies_controller:spawnEnemy(x, y)
@@ -77,10 +80,9 @@ end
 
 function love.draw()
   --player
-  love.graphics.setColor(255,192,203)
-  love.graphics.draw(player.image, player.x, player.y, 0, 1)
-  --enemies
   love.graphics.setColor(255,255,255)
+  love.graphics.draw(player.image, player.x, player.y, 0, 1)
+
   for _,e in pairs(enemies_controller.enemies) do
     love.graphics.draw(enemies_controller.image, e.x, e.y, 0, 2)
   end
