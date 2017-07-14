@@ -35,18 +35,18 @@ function love.load()
       table.insert(player.bullets, bullet)
     end
   end
-    enemies_controller:spawnEnemy(0, 0)
-    enemies_controller:spawnEnemy(65, 0)
-    enemies_controller:spawnEnemy(130, 0)
-    enemies_controller:spawnEnemy(195, 0)
+
+  for i = 0, 10 do
+    enemies_controller:spawnEnemy(i * 80, 0)
+  end
 end
 
 function enemies_controller:spawnEnemy(x, y)
   enemy = {}
   enemy.x = x
   enemy.y = y
-  enemy.width = 25
-  enemy.height = 25
+  enemy.width = 30
+  enemy.height = 30
   enemy.bullets = {}
   enemy.cooldown = 10
   table.insert(self.enemies, enemy)
@@ -106,8 +106,8 @@ function love.draw()
     love.graphics.draw(enemies_controller.image, e.x, e.y)
   end
   --bullets
-  love.graphics.setColor(0,0,255)
+  love.graphics.setColor(255,255,255)
   for _,b in pairs(player.bullets) do
-    love.graphics.rectangle("fill", b.x, b.y, 10, 10)
+    love.graphics.rectangle("fill", b.x, b.y, 5, 10)
   end
 end
