@@ -16,6 +16,11 @@ function checkCollisions(enemies, bullets)
 end
 
 function love.load()
+  local music = love.audio.newSource('BGM.mp3')
+  music:setLooping(true)
+  love.audio.play(music)
+  game_over = false
+  game_win = false
   background_image = love.graphics.newImage('background.png')
 
   player = {}
@@ -36,7 +41,7 @@ function love.load()
     end
   end
 
-  for i = 0, 10 do
+  for i = 0, 8  do
     enemies_controller:spawnEnemy(i * 80, 0)
   end
 end
@@ -79,7 +84,14 @@ function love.update(dt)
     player.fire()
   end
 
+  if #enemies_controller.enemies == 0 then
+    game_win = true
+  end
+
   for _,e in pairs(enemies_controller.enemies) do
+    if e.y >= love.graphics.getHeight() then
+      game_over = true
+    end
     e.y = e.y + 1
   end
 
@@ -98,6 +110,12 @@ function love.draw()
   local sx = love.graphics.getWidth() / background_image:getWidth()
   local sy = love.graphics.getHeight() / background_image:getHeight()
   love.graphics.draw(background_image, 0, 0, 0, sx, sy) -- x: 0, y: 0, rot: 0, scale x and scale y
+  if game_over then
+    love.graphics.print("Game Over Yeah!!!")
+    return
+  elseif game_win then
+    love.graphics.print("A winner is you!!!!")
+  end
   --player
   love.graphics.setColor(255,255,255)
   love.graphics.draw(player.image, player.x, player.y, 0, 1)
