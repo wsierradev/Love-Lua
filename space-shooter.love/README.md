@@ -8,7 +8,7 @@ A simple "Space Invaders" style shooter game made with the LÖVE(love2d) framewo
 
 * Run space-shooter.love in your terminal or drag file over the love2d executable
 
-##Controls
+## Controls
 
 * Left/Right button on the keyboard to move your ship
 
