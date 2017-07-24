@@ -3,6 +3,8 @@ enemy = {}
 enemies_controller = {}
 enemies_controller.enemies = {}
 enemies_controller.image = love.graphics.newImage('enemy.png')
+particle_systems = {}
+
 
 function checkCollisions(enemies, bullets)
   for i, e in ipairs(enemies) do
@@ -92,7 +94,7 @@ function love.update(dt)
     if e.y >= love.graphics.getHeight() then
       game_over = true
     end
-    e.y = e.y + 1
+    e.y = e.y + 1 
   end
 
   for i,b in ipairs(player.bullets) do
