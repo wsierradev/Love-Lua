@@ -5,6 +5,7 @@ player = {}
 
 function love.load()
   player.speed = 200
+  player.jump_qty = 3
         -- This is the height and the width of the platform.
 	platform.width = love.graphics.getWidth()    -- This makes the platform as wide as the whole game window.
 	platform.height = love.graphics.getHeight()  -- This makes the platform as tall as the whole game window.
@@ -22,7 +23,7 @@ function love.load()
   player.ground = player.y     -- This makes the character land on the plaform.
 	player.y_velocity = 0        -- Whenever the character hasn't jumped yet, the Y-Axis velocity is always at 0.
 	player.jump_height = -300    -- Whenever the character jumps, he can reach this height.
-	player.gravity = -500        -- Whenever the character falls, he will descend at this rate.
+	player.gravity = -750        -- Whenever the character falls, he will descend at this rate.
 
 
 end
@@ -38,10 +39,15 @@ function love.update(dt)
 		end
 	end
 
-	if love.keyboard.isDown('space') then
-		if player.y_velocity == 0 then
+	function love.keypressed(space)
+    if space == "space" then
+    player.jump_qty = player.jump_qty - 1
+		if player.y_velocity == 0 and player.jump_qty > 0 then
 			player.y_velocity = player.jump_height
+    elseif player.jump_qty > 0 then
+      player.y_velocity = player.jump_height
 		end
+  end
 	end
 
 	if player.y_velocity ~= 0 then
@@ -52,6 +58,7 @@ function love.update(dt)
 	if player.y > player.ground then
 		player.y_velocity = 0
     	player.y = player.ground
+      player.jump_qty = 3
 	end
 end
 
